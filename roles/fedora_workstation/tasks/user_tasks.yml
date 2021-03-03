@@ -1,0 +1,86 @@
+---
+- name: Fedora Workstation tasks
+  block:
+    - name: Add Flatpak as a User Repo
+      community.general.flatpak_remote:
+        name: flathub-user
+        state: present
+        flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+        method: user
+    - name: Install Flatpaks
+      community.general.flatpak:
+        name: "{{ item.name }}"
+        method: user
+        remote: flathub-user
+        state: present
+      loop:
+        - name: com.github.marktext.marktext
+        - name: com.microsoft.Teams
+        - name: im.riot.Riot
+        - name: com.slack.Slack
+        - name: org.telegram
+    - name: Clone Vim Plugins
+      ansible.builtin.git:
+        repo: "{{ item.url }}"
+        dest: "{{ ansible_env.HOME }}/{{ item.location }}"
+        version: master
+      loop:
+        - url: "https://github.com/dense-analysis/ale.git"
+          location: ".vim/pack/dense-analysis/start/ale"
+        - url: "https://github.com/ctrlpvim/ctrlp.vim.git"
+          location: ".vim/pack/ctrlpvim/start/ctrlp.vim"
+        - url: "https://github.com/junegunn/fzf.vim.git"
+          location: ".vim/pack/junegunn/start/fzf.vim"
+        - url: "https://github.com/OmniSharp/omnisharp-vim.git"
+          location: ".vim/pack/omnisharp/start/omnisharp-vim"
+        - url: "https://github.com/rust-lang/rust.vim.git"
+          location: ".vim/pack/rust-lang/start/rust.vim"
+        - url: "https://github.com/vim-airline/vim-airline.git"
+          location: ".vim/pack/vim-airline/start/vim-airline"
+        - url: "https://github.com/ajmwagar/vim-deus.git"
+          location: ".vim/pack/ajmwagar/start/vim-deus"
+        - url: "https://github.com/tpope/vim-endwise.git"
+          location: ".vim/pack/tpope/start/vim-endwise"
+        - url: "https://github.com/tpope/vim-fugitive.git"
+          location: ".vim/pack/tpope/start/vim-fugitive"
+        - url: "https://github.com/plasticboy/vim-markdown.git"
+          location: ".vim/pack/plasticboy/start/vim-markdown"
+        - url: "https://github.com/fatih/vim-go.git"
+          location: ".vim/pack/fatih/start/vim-go"
+        - url: "https://github.com/ludovicchabant/vim-gutentags.git"
+          location: ".vim/pack/ludovicchabant/start/vim-gutentags"
+        - url: "https://github.com/mzlogin/vim-markdown-toc.git"
+          location: ".vim/pack/mzlogin/start/vim-markdown-toc"
+        - url: "https://github.com/hashivim/vim-terraform.git"
+          location: ".vim/pack/hashivim/start/vim-terraform"
+        - url: "https://github.com/sotte/presenting.vim.git"
+          location: ".vim/pack/sotte/start/presenting.vim"
+        - url: "https://github.com/junegunn/goyo.vim.git"
+          location: ".vim/pack/junegunn/start/goyo.vim"
+        - url: "https://github.com/neoclide/coc.nvim.git"
+          location: ".vim/pack/neoclide/start/coc.nvim"
+        - url: "https://github.com/ekalinin/dockerfile.vim.git"
+          location: ".vim/pack/ekalinin/start/dockerfile.vim"
+    - name: Create NeoVim configuration Directory
+      ansible.builtin.file:
+        path: "{{ ansible_env.HOME }}/.config/nvim"
+        state: directory
+        owner: filbot
+        group: filbot
+        mode: '0755'
+    - name: Create NeoVim init.vim File
+      ansible.builtin.copy:
+        content: |
+          set runtimepath^=~/.vim runtimepath+=~/.vim/after
+          let &packpath = &runtimepath
+          source ~/.vim/vimrc
+        dest: "{{ ansible_env.HOME }}/.config/nvim/init.vim"
+        owner: filbot
+        group: filbot
+        mode: "0755"
+    - name: Compile neoclide coc.nvim just because
+      ansible.builtin.shell:
+        cmd: yarn install --frozen-lockfile
+        chdir: "{{ ansible_env.HOME }}/.vim/pack/neoclide/start/coc.nvim"
+  when: (ansible_distribution == 'Fedora')
+...

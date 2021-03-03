@@ -1,0 +1,89 @@
+---
+- name: Fedora Workstation tasks
+  block:
+    - name: Enable System76 COPR
+      community.general.copr:
+        host: copr.fedorainfracloud.org
+        state: enabled
+        name: szydell/system76
+    - name: Install Microsoft Signing Key
+      ansible.builtin.rpm_key:
+        key: https://packages.microsoft.com/keys/microsoft.asc
+        state: present
+    - name: Land VS Code Yum Repo File
+      ansible.builtin.copy:
+        content: |
+          [code]
+          name=Visual Studio Code
+          baseurl=https://packages.microsoft.com/yumrepos/vscode
+          enabled=1
+          gpgcheck=1
+          gpgkey=https://packages.microsoft.com/keys/microsoft.asc
+        dest: /etc/yum.repos.d/visual-studio-code.repo
+        owner: root
+        group: root
+        mode: 0644
+    - name: Install Fedora System76 Drivers
+      ansible.builtin.dnf:
+        name:
+          - system76-dkms
+          - system76-power
+          - system76-driver
+          - system76-firmware
+          - firmware-manager
+          - system76-io-dkms
+    - name: Enable System76 Drivers in SystemD
+      ansible.builtin.systemd:
+        name: "{{ item }}"
+        state: started
+        enabled: yes
+      loop:
+        - system76-power
+        - system76-power-wake
+        - system76-firmware-daemon
+    - name: Enable System76 Firmware Notifier
+      ansible.builtin.systemd:
+        name: "{{ item }}"
+        enabled: yes
+        scope: user
+      ignore_errors: true
+      loop:
+        - com.system76.FirmwareManager.Notify.timer
+    - name: Install Flatpak
+      ansible.builtin.dnf:
+        name:
+          - flatpak
+        state: present
+    - name: Install Phil Default packages
+      ansible.builtin.dnf:
+        name:
+          - neovim
+          - tmux
+          - git
+          - pandoc
+          - nodejs
+          - yarnpkg
+          - dotnet-sdk-5.0
+          - code
+          - zsh
+          - chromium
+          - fzf
+    - name: Install TexLive LaTeX Processor
+      ansible.builtin.dnf:
+        name:
+          - latexmk
+          - texlive
+          - texlive-beamer
+          - texlive-titling
+          - texlive-ulem
+        state: present
+    - name: Install yq Processor
+      ansible.builtin.get_url:
+        url: "https://github.com/mikefarah/yq/releases/download/v4.6.1/yq_linux_amd64"
+        checksum: "sha256:a339079fadf5e01d69067349b67db695db1a4f5046281713e35d9b6ca790b499"
+        dest: /usr/local/bin/yq
+        owner: root
+        group: root
+        mode: "0755"
+  when: (ansible_distribution == 'Fedora')
+...

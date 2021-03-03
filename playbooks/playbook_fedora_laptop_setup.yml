@@ -1,0 +1,21 @@
+---
+- name: Setup Fedora Workstation Root Tasks
+  hosts: localhost
+  gather_facts: true
+  vars:
+    ansible_become: true
+    ansible_become_user: root
+    ansible_become_method: sudo
+  roles:
+    - role: filbot.fedora_workstation.fedora_workstation
+      vars:
+        root_tasks: true
+
+- name: Setup Fedora Workstation User Tasks
+  hosts: localhost
+  gather_facts: true
+  roles:
+    - role: filbot.fedora_workstation.fedora_workstation
+      vars:
+        user_tasks: true
+...
