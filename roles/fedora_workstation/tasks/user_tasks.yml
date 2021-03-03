@@ -88,5 +88,11 @@
         cmd: "code --install-extension {{ item.name }}"
       loop:
         - name: ms-vscode-remote.vscode-remote-extensionpack
+        - name: MS-vsliveshare.vsliveshare
+        - name: MS-vsliveshare.vsliveshare-pack
+        - name: ms-dotnettools.csharp
+        - name: ms-python.python
+        - name: golang.Go
+        - name: rust-lang.rust
   when: (ansible_distribution == 'Fedora')
 ...

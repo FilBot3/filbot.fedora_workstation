@@ -68,6 +68,9 @@
           - zsh
           - chromium
           - fzf
+          - podman
+          - buildah
+          - skopeo
     - name: Install TexLive LaTeX Processor
       ansible.builtin.dnf:
         name:
