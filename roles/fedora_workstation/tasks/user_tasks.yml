@@ -19,6 +19,7 @@
         - name: im.riot.Riot
         - name: com.slack.Slack
         - name: org.telegram
+        - name: com.bitwarden
     - name: Clone Vim Plugins
       ansible.builtin.git:
         repo: "{{ item.url }}"
