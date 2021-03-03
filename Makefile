@@ -9,3 +9,6 @@ collection-install:
 
 galaxy-install:
 	ansible-galaxy install -r requirements.yml
+
+playbook:
+	ansible-playbook playbooks/playbook_fedora_laptop_setup.yml --ask-become-pass

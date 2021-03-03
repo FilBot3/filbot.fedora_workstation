@@ -21,6 +21,9 @@
         - name: org.telegram
         - name: com.bitwarden
         - name: net.cozic.joplin_desktop
+        - name: com.sublimemerge.App
+        - name: com.sublimetext.three
+        - name: com.sublimetext.three.DevUtils
     - name: Clone Vim Plugins
       ansible.builtin.git:
         repo: "{{ item.url }}"

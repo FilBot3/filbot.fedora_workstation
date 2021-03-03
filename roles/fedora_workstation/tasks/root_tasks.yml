@@ -71,6 +71,8 @@
           - podman
           - buildah
           - skopeo
+          - neovim-qt
+          - python-neovim
     - name: Install TexLive LaTeX Processor
       ansible.builtin.dnf:
         name:
