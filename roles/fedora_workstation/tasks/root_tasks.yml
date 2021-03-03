@@ -43,7 +43,7 @@
     - name: Start System76 Drivers in SystemD
       ansible.builtin.systemd:
         name: "{{ item }}"
-        state: restarted
+        state: started
         enabled: yes
       loop:
         - system76-power
