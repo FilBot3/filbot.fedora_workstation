@@ -1,0 +1,10 @@
+---
+collections:
+  - name: ansible.builtin
+    source: https://galaxy.ansible.com
+  - name: community.general
+    source: https://galaxy.ansible.com
+  - name: https://github.com/FilBot3/filbot.fedora_workstation.git
+    type: git
+    version: main
+...
