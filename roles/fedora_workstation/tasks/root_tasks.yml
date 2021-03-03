@@ -48,14 +48,6 @@
       loop:
         - system76-power
         - system76-firmware-daemon
-    - name: Enable System76 Firmware Notifier
-      ansible.builtin.systemd:
-        name: "{{ item }}"
-        enabled: yes
-        scope: user
-      ignore_errors: true
-      loop:
-        - com.system76.FirmwareManager.Notify.timer
     - name: Install Flatpak
       ansible.builtin.dnf:
         name:

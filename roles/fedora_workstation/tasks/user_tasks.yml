@@ -1,6 +1,14 @@
 ---
 - name: Fedora Workstation tasks
   block:
+    - name: Enable System76 Firmware Notifier
+      ansible.builtin.systemd:
+        name: "{{ item.name }}"
+        enabled: yes
+        scope: user
+      ignore_errors: true
+      loop:
+        - name: com.system76.FirmwareManager.Notify.timer
     - name: Add Flatpak as a User Repo
       community.general.flatpak_remote:
         name: flathub-user
@@ -23,7 +31,7 @@
         - name: net.cozic.joplin_desktop
         - name: com.sublimemerge.App
         - name: com.sublimetext.three
-        - name: com.sublimetext.three.DevUtils
+        - name: runtime/com.sublimetext.three.DevUtils/x86_64/19.08
     - name: Clone Vim Plugins
       ansible.builtin.git:
         repo: "{{ item.url }}"
