@@ -2,10 +2,10 @@
 - name: Include Root Tasks
   ansible.builtin.include_tasks:
     file: root_tasks.yml
-    when: root_tasks
+  when: root_tasks
 
 - name: Include User Tasks
   ansible.builtin.include_tasks:
     file: user_tasks.yml
-    when: user_tasks
+  when: user_tasks
 ...
