@@ -35,11 +35,18 @@
     - name: Enable System76 Drivers in SystemD
       ansible.builtin.systemd:
         name: "{{ item }}"
-        state: started
         enabled: yes
       loop:
         - system76-power
         - system76-power-wake
+        - system76-firmware-daemon
+    - name: Start System76 Drivers in SystemD
+      ansible.builtin.systemd:
+        name: "{{ item }}"
+        state: restarted
+        enabled: yes
+      loop:
+        - system76-power
         - system76-firmware-daemon
     - name: Enable System76 Firmware Notifier
       ansible.builtin.systemd:
