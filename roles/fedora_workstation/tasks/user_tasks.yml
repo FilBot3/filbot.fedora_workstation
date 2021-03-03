@@ -83,5 +83,10 @@
       ansible.builtin.shell:
         cmd: yarn install --frozen-lockfile
         chdir: "{{ ansible_env.HOME }}/.vim/pack/neoclide/start/coc.nvim"
+    - name: Install Visual Studio Code Extensions
+      ansible.builtin.shell:
+        cmd: "code --install-extension {{ item.name }}"
+      loop:
+        - name: ms-vscode-remote.vscode-remote-extensionpack
   when: (ansible_distribution == 'Fedora')
 ...
