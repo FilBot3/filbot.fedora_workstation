@@ -20,6 +20,7 @@
         - name: com.slack.Slack
         - name: org.telegram
         - name: com.bitwarden
+        - name: net.cozic.joplin_desktop
     - name: Clone Vim Plugins
       ansible.builtin.git:
         repo: "{{ item.url }}"
