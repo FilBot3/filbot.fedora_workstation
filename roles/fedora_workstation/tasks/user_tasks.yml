@@ -109,7 +109,13 @@
         owner: filbot
         group: filbot
         mode: '0755'
-      when: not diabled_task
+
+    - name: Create blank NPM package.json, will skip if existing.
+      ansible.builtin.shell:
+        cmd: >
+          echo '{"dependencies":{}}'> package.json
+        chdir: "{{ ansible_env.HOME }}/.config/coc/extensions"
+        creates: "{{ ansible_env.HOME }}/.config/coc/extensions/package.json"
 
     - name: Install coc.nvim Plugins
       ansible.builtin.shell:
@@ -128,7 +134,7 @@
               coc-eslint
               coc-css
               coc-tsserver
-      when: not diabled_task
+        chdir: "{{ ansible_env.HOME }}/.config/coc/extensions"
 
     - name: Install Visual Studio Code Extensions
       ansible.builtin.shell:
