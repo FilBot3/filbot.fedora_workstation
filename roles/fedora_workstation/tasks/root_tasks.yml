@@ -106,7 +106,7 @@
     - name: Download kubecolor
       ansible.builtin.get_url:
         url: "https://github.com/dty1er/kubecolor/releases/download/v0.0.11/kubecolor_0.0.11_Linux_x86_64.tar.gz"
-        checksum: "sha256:eb79c6cc5188bb6b5304c6d1b512992195bd60b9b846652b9e5bb0a15a37fbbe"
+        checksum: "sha256:767f504f6d68743611343909fd816800c7c5ca3407da3bb7892d37be2894ba6e"
         dest: /tmp/kubecolor.tar.gz
         owner: root
         group: root
