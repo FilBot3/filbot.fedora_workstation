@@ -122,5 +122,10 @@
         owner: root
         group: root
         mode: '0755'
+    - name: Install RPM Forge Free and Non-Free
+      ansible.builtint.dnf:
+        name:
+          - https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-33.noarch.rpm
+          - https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-33.noarch.rpm
   when: (ansible_distribution == 'Fedora')
 ...
