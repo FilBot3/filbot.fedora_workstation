@@ -133,6 +133,7 @@
     - name: Land Terraform Repo file
       ansible.builtin.yum_repository:
         name: Terraform
+        description: HashiCorp Terraform
         baseurl: https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
 
     - name: Install Terraform
