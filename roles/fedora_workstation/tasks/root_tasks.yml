@@ -131,10 +131,12 @@
         disable_gpg_check: true
 
     - name: Land Terraform Repo file
-      ansible.builtin.yum_repository:
-        name: Terraform
-        description: HashiCorp Terraform
-        baseurl: https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
+      ansible.builtin.get_url:
+        url: https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
+        dest: /etc/yum.repos.d/hashicorp.repo
+        owner: root
+        group: root
+        mode: '0644'
 
     - name: Install Terraform
       ansible.builtin.dnf:
