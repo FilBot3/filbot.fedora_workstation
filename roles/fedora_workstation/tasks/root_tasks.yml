@@ -127,5 +127,7 @@
         name:
           - https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-33.noarch.rpm
           - https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-33.noarch.rpm
+        state: present
+        disable_gpg_check: true
   when: (ansible_distribution == 'Fedora')
 ...
