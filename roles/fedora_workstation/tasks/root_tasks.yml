@@ -11,14 +11,8 @@
         key: https://packages.microsoft.com/keys/microsoft.asc
         state: present
     - name: Land VS Code Yum Repo File
-      ansible.builtin.copy:
-        content: |
-          [code]
-          name=Visual Studio Code
-          baseurl=https://packages.microsoft.com/yumrepos/vscode
-          enabled=1
-          gpgcheck=1
-          gpgkey=https://packages.microsoft.com/keys/microsoft.asc
+      ansible.builtin.template:
+        src: visual-studio-code.repo.j2
         dest: /etc/yum.repos.d/visual-studio-code.repo
         owner: root
         group: root
@@ -72,6 +66,13 @@
           - skopeo
           - neovim-qt
           - python-neovim
+          - container-selinux
+          - selinux-policy-base
+          - jq
+    - name: Install k3s selinux Policy
+      ansible.builtin.dnf:
+        name: https://rpm.rancher.io/k3s/stable/common/centos/7/noarch/k3s-selinux-0.2-1.el7_8.noarch.rpm
+        state: present
     - name: Install TexLive LaTeX Processor
       ansible.builtin.dnf:
         name:
@@ -89,5 +90,37 @@
         owner: root
         group: root
         mode: "0755"
+    - name: Land Kubernetes Configuration
+      ansible.builtin.template:
+        src: kubernetes.repo.j2
+        dest: /etc/yum.repos.d/kubernetes.repo
+        owner: root
+        group: root
+        mode: '0644'
+    - name: Install kubectl
+      ansible.builtin.dnf:
+        name:
+          - kubectl
+        state: present
+        disable_excludes: kubernetes
+    - name: Download kubecolor
+      ansible.builtin.get_url:
+        url: "https://github.com/dty1er/kubecolor/releases/download/v0.0.11/kubecolor_0.0.11_Linux_x86_64.tar.gz"
+        checksum: "sha256:eb79c6cc5188bb6b5304c6d1b512992195bd60b9b846652b9e5bb0a15a37fbbe"
+        dest: /tmp/kubecolor.tar.gz
+        owner: root
+        group: root
+        mode: '0644'
+    - name: Extract kubecolor
+      ansible.builtin.unarchive:
+        src: /tmp/kubecolor.tar.gz
+        dest: /tmp
+    - name: Install kubecolor
+      ansible.builtin.copy:
+        src: /tmp/kubecolor
+        dest: /usr/local/bin/kubecolor
+        owner: root
+        group: root
+        mode: '0755'
   when: (ansible_distribution == 'Fedora')
 ...
