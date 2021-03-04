@@ -119,20 +119,20 @@
 
     - name: Install coc.nvim Plugins
       ansible.builtin.shell:
-        cmd: >
-          npm install
-            --global-style
-            --ignore-scripts
-            --no-bin-links
-            --no-package-lock
-            --only=prod
-              coc-json
-              coc-yaml
-              coc-sh
-              coc-python
-              coc-markdownlint
-              coc-eslint
-              coc-css
+        cmd: |
+          npm install \
+            --global-style \
+            --ignore-scripts \
+            --no-bin-links \
+            --no-package-lock \
+            --only=prod \
+              coc-json \
+              coc-yaml \
+              coc-sh \
+              coc-python \
+              coc-markdownlint \
+              coc-eslint \
+              coc-css \
               coc-tsserver
         chdir: "{{ ansible_env.HOME }}/.config/coc/extensions"
 
