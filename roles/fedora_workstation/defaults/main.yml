@@ -1,4 +1,5 @@
 ---
 root_tasks: false
 user_tasks: false
+disabled_task: true
 ...
