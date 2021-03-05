@@ -34,6 +34,7 @@
         - name: com.sublimemerge.App
         - name: com.sublimetext.three
         - name: runtime/com.sublimetext.three.DevUtils/x86_64/19.08
+        - name: com.github.johnfactotum.Foliate
 
     - name: Clone Vim Plugins
       ansible.builtin.git:
@@ -147,6 +148,7 @@
         - name: ms-python.python
         - name: golang.Go
         - name: rust-lang.rust
+        - name: davidanson.vscode-markdownlint
 
     - name: Land my vimrc
       ansible.builtin.template:
