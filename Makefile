@@ -1,4 +1,4 @@
-default: collection-install-github
+default: collection-install-local
 
 collection-install-local:
 	ansible-galaxy collection install git+file:///$(shell pwd)/.git --force
