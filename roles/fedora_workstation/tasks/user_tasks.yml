@@ -35,6 +35,7 @@
         - name: com.sublimetext.three
         - name: runtime/com.sublimetext.three.DevUtils/x86_64/19.08
         - name: com.github.johnfactotum.Foliate
+        - name: org.libreoffice.LibreOffice
 
     - name: Clone Vim Plugins
       ansible.builtin.git:

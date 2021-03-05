@@ -77,6 +77,7 @@
           - selinux-policy-base
           - jq
           - golang
+          - https://storage.googleapis.com/minikube/releases/latest/minikube-latest.x86_64.rpm
         state: present
 
     - name: Install k3s selinux Policy
@@ -139,7 +140,7 @@
         owner: root
         group: root
         mode: '0755'
-        
+
     - name: Install RPM Forge Free and Non-Free
       ansible.builtin.dnf:
         name:
